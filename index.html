@@ -117,6 +117,7 @@
             font-weight: bold;
         }
 
+        /* КНОПКА С ТВОЕЙ ССЫЛКОЙ */
         .download-button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -130,6 +131,9 @@
             transition: transform 0.3s, box-shadow 0.3s;
             margin-bottom: 30px;
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
         .download-button:hover {
@@ -157,6 +161,12 @@
             font-size: 14px;
             line-height: 1.6;
             margin-bottom: 10px;
+        }
+
+        .virus-total-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
         }
 
         .how-to-install {
@@ -208,70 +218,6 @@
             font-size: 14px;
         }
 
-        .reviews-section {
-            margin-top: 60px;
-            color: white;
-        }
-
-        .reviews-section h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 36px;
-        }
-
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .review-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .review-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .review-avatar {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .review-name {
-            font-weight: bold;
-        }
-
-        .review-date {
-            font-size: 12px;
-            opacity: 0.7;
-        }
-
-        .review-text {
-            font-size: 14px;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .review-rating {
-            color: #ffd700;
-            margin-top: 10px;
-            font-size: 20px;
-        }
-
         .footer {
             text-align: center;
             color: white;
@@ -280,86 +226,27 @@
             border-top: 1px solid rgba(255,255,255,0.2);
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-        }
-
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
             }
-            
             .header h1 {
                 font-size: 36px;
             }
-            
-            .reviews-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #999;
-        }
-
-        .modal-close:hover {
-            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="site-container">
+        <!-- Шапка -->
         <div class="header">
             <h1>🍪 Clicker Pro</h1>
             <p>Самый увлекательный кликер теперь на твоём телефоне! Без рекламы, без подписок, чистое удовольствие.</p>
         </div>
 
+        <!-- Основной блок -->
         <div class="main-content">
+            <!-- Левая часть: превью игры -->
             <div class="game-preview">
                 <div class="game-screenshot">
                     <span>👆</span>
@@ -377,157 +264,47 @@
                 </ul>
             </div>
 
+            <!-- Правая часть: скачивание -->
             <div class="download-section">
                 <h2>Скачать игру</h2>
                 <div class="price-badge">🔥 БЕСПЛАТНО</div>
                 
-                <!-- ЗДЕСЬ ГЛАВНОЕ - КНОПКА С ТВОЕЙ ССЫЛКОЙ -->
-                <a href="https://t.me/sugurucoins/3" download style="text-decoration: none;">
-                    <button class="download-button">
-                        📥 Скачать APK (15 МБ)
-                    </button>
+                <!-- КНОПКА С ТВОЕЙ ССЫЛКОЙ -->
+                <a href="https://t.me/sugurucoins/5" target="_blank" style="text-decoration: none;">
+                    <div class="download-button">
+                        📥 Скачать APK
+                    </div>
                 </a>
 
+                <!-- Информация о безопасности -->
                 <div class="security-info">
                     <h3>🛡️ Безопасность подтверждена</h3>
                     <p>Приложение проверено на VirusTotal — 0 угроз. Чистый код, без вирусов и шпионского ПО.</p>
-                    <a href="#" class="virus-total-link" onclick="showVirusTotal(event)">🔍 Посмотреть результаты проверки</a>
                 </div>
 
+                <!-- Инструкция по установке -->
                 <div class="how-to-install">
                     <h3>📲 Как установить</h3>
                     <ol class="install-steps">
                         <li>Нажми кнопку "Скачать" выше</li>
-                        <li>Открой скачанный файл на телефоне</li>
-                        <li>При предупреждении нажми "Всё равно установить"</li>
-                        <li>Готово! Игра на рабочем столе</li>
+                        <li>Перейди в Telegram канал</li>
+                        <li>Нажми на файл в сообщении</li>
+                        <li>Разреши установку и играй!</li>
                     </ol>
                 </div>
 
+                <!-- Предупреждение -->
                 <div class="warning-note">
-                    ⚠️ Android может показать предупреждение о безопасности, потому что приложение не из Google Play. Мы работаем над публикацией в магазине, а пока — просто нажми "Всё равно установить". Это безопасно!
+                    ⚠️ Android может показать предупреждение о безопасности — это нормально для приложений не из Google Play. Просто нажми "Всё равно установить".
                 </div>
             </div>
         </div>
 
-        <div class="reviews-section">
-            <h2>🌟 Что говорят игроки</h2>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-avatar">👨</div>
-                        <div>
-                            <div class="review-name">Алексей</div>
-                            <div class="review-date">2 дня назад</div>
-                        </div>
-                    </div>
-                    <div class="review-rating">★★★★★</div>
-                    <div class="review-text">"Классный кликер! Уже накликал 10к монет, купил автокликер. Сижу теперь, монеты капают сами 🔥"</div>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-avatar">👩</div>
-                        <div>
-                            <div class="review-name">Екатерина</div>
-                            <div class="review-date">5 дней назад</div>
-                        </div>
-                    </div>
-                    <div class="review-rating">★★★★★</div>
-                    <div class="review-text">"Ребёнок в восторге! Простая механика, но затягивает. Спасибо разработчику!"</div>
-                </div>
-                
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-avatar">👨</div>
-                        <div>
-                            <div class="review-name">Дмитрий</div>
-                            <div class="review-date">Неделю назад</div>
-                        </div>
-                    </div>
-                    <div class="review-rating">★★★★★</div>
-                    <div class="review-text">"Отличная игра чтобы убить время. Никакой рекламы, всё честно. Жду обновлений!"</div>
-                </div>
-            </div>
-        </div>
-
+        <!-- Подвал -->
         <div class="footer">
-            <div class="footer-links">
-                <a href="#" onclick="showModal('privacy')">Политика конфиденциальности</a>
-                <a href="#" onclick="showModal('terms')">Условия использования</a>
-                <a href="#" onclick="showModal('contact')">Контакты</a>
-            </div>
             <p>© 2026 Clicker Pro. Все права защищены.</p>
+            <p>Наш Telegram: @sugurucoins</p>
         </div>
     </div>
-
-    <div class="modal" id="virusModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('virusModal')">&times;</span>
-            <h2>🔬 Результаты проверки VirusTotal</h2>
-            <div style="text-align: center; margin: 30px 0;">
-                <div style="font-size: 72px; color: #4CAF50;">✓</div>
-                <h3 style="color: #4CAF50;">0 угроз найдено</h3>
-                <p>Проверено 68 антивирусных движков</p>
-            </div>
-            <div style="background: #f5f5f5; padding: 15px; border-radius: 10px;">
-                <p style="margin-bottom: 5px;">✅ Все антивирусы подтвердили безопасность файла:</p>
-                <p>Kaspersky, Dr.Web, Avast, AVG, Bitdefender, McAfee и другие</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="privacyModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('privacyModal')">&times;</span>
-            <h2>🔒 Политика конфиденциальности</h2>
-            <p>Приложение не собирает и не хранит ваши личные данные. Вся информация о прогрессе сохраняется только на вашем устройстве.</p>
-        </div>
-    </div>
-
-    <div class="modal" id="termsModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('termsModal')">&times;</span>
-            <h2>📜 Условия использования</h2>
-            <p>Приложение предоставляется "как есть". Разработчик не несет ответственности за возможные проблемы с устройством. Используйте на свой страх и риск.</p>
-        </div>
-    </div>
-
-    <div class="modal" id="contactModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('contactModal')">&times;</span>
-            <h2>📧 Контакты</h2>
-            <p>По всем вопросам: support@clickerpro.com</p>
-            <p>Telegram: @clickerpro_support</p>
-        </div>
-    </div>
-
-    <script>
-        function showVirusTotal(event) {
-            event.preventDefault();
-            document.getElementById('virusModal').classList.add('active');
-        }
-
-        function showModal(type) {
-            event.preventDefault();
-            if (type === 'privacy') {
-                document.getElementById('privacyModal').classList.add('active');
-            } else if (type === 'terms') {
-                document.getElementById('termsModal').classList.add('active');
-            } else if (type === 'contact') {
-                document.getElementById('contactModal').classList.add('active');
-            }
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
-            }
-        }
-    </script>
 </body>
 </html>
