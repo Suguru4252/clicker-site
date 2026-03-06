@@ -26,7 +26,6 @@
             width: 100%;
         }
 
-        /* Шапка */
         .header {
             text-align: center;
             color: white;
@@ -46,7 +45,6 @@
             margin: 0 auto;
         }
 
-        /* Основной контент */
         .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -54,7 +52,6 @@
             align-items: center;
         }
 
-        /* Левая часть - превью игры */
         .game-preview {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
@@ -97,7 +94,6 @@
             margin-right: 10px;
         }
 
-        /* Правая часть - скачивание */
         .download-section {
             background: white;
             border-radius: 30px;
@@ -163,12 +159,6 @@
             margin-bottom: 10px;
         }
 
-        .virus-total-link {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
         .how-to-install {
             border-top: 2px solid #eee;
             padding-top: 20px;
@@ -218,7 +208,6 @@
             font-size: 14px;
         }
 
-        /* Отзывы */
         .reviews-section {
             margin-top: 60px;
             color: white;
@@ -283,7 +272,6 @@
             font-size: 20px;
         }
 
-        /* Подвал */
         .footer {
             text-align: center;
             color: white;
@@ -310,7 +298,6 @@
             opacity: 1;
         }
 
-        /* Адаптация под мобилки */
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -325,7 +312,6 @@
             }
         }
 
-        /* Попап с инструкцией */
         .modal {
             display: none;
             position: fixed;
@@ -368,15 +354,12 @@
 </head>
 <body>
     <div class="site-container">
-        <!-- Шапка -->
         <div class="header">
             <h1>🍪 Clicker Pro</h1>
             <p>Самый увлекательный кликер теперь на твоём телефоне! Без рекламы, без подписок, чистое удовольствие.</p>
         </div>
 
-        <!-- Основной блок -->
         <div class="main-content">
-            <!-- Левая часть: превью игры -->
             <div class="game-preview">
                 <div class="game-screenshot">
                     <span>👆</span>
@@ -394,23 +377,23 @@
                 </ul>
             </div>
 
-            <!-- Правая часть: скачивание -->
             <div class="download-section">
                 <h2>Скачать игру</h2>
                 <div class="price-badge">🔥 БЕСПЛАТНО</div>
                 
-                <button class="download-button" onclick="downloadApp()">
-                    📥 Скачать APK (15 МБ)
-                </button>
+                <!-- ЗДЕСЬ ГЛАВНОЕ - КНОПКА С ТВОЕЙ ССЫЛКОЙ -->
+                <a href="https://t.me/c/2605077501/5293" download style="text-decoration: none;">
+                    <button class="download-button">
+                        📥 Скачать APK (15 МБ)
+                    </button>
+                </a>
 
-                <!-- Информация о безопасности -->
                 <div class="security-info">
                     <h3>🛡️ Безопасность подтверждена</h3>
                     <p>Приложение проверено на VirusTotal — 0 угроз. Чистый код, без вирусов и шпионского ПО.</p>
                     <a href="#" class="virus-total-link" onclick="showVirusTotal(event)">🔍 Посмотреть результаты проверки</a>
                 </div>
 
-                <!-- Инструкция по установке -->
                 <div class="how-to-install">
                     <h3>📲 Как установить</h3>
                     <ol class="install-steps">
@@ -421,14 +404,12 @@
                     </ol>
                 </div>
 
-                <!-- Предупреждение (дружелюбное) -->
                 <div class="warning-note">
                     ⚠️ Android может показать предупреждение о безопасности, потому что приложение не из Google Play. Мы работаем над публикацией в магазине, а пока — просто нажми "Всё равно установить". Это безопасно!
                 </div>
             </div>
         </div>
 
-        <!-- Отзывы игроков -->
         <div class="reviews-section">
             <h2>🌟 Что говорят игроки</h2>
             <div class="reviews-grid">
@@ -470,7 +451,6 @@
             </div>
         </div>
 
-        <!-- Подвал -->
         <div class="footer">
             <div class="footer-links">
                 <a href="#" onclick="showModal('privacy')">Политика конфиденциальности</a>
@@ -481,7 +461,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для VirusTotal -->
     <div class="modal" id="virusModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('virusModal')">&times;</span>
@@ -498,7 +477,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для политики -->
     <div class="modal" id="privacyModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('privacyModal')">&times;</span>
@@ -507,7 +485,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для условий -->
     <div class="modal" id="termsModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('termsModal')">&times;</span>
@@ -516,7 +493,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для контактов -->
     <div class="modal" id="contactModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('contactModal')">&times;</span>
@@ -527,30 +503,11 @@
     </div>
 
     <script>
-        // Функция скачивания APK
-        function downloadApp() {
-            // ЗДЕСЬ ТЫ ДОЛЖЕН ВСТАВИТЬ ССЫЛКУ НА СВОЙ APK-ФАЙЛ!
-            const apkUrl = 'https://demo2apk.lasuo.ai/download/7AlxNb8waEYm'; // ЗАМЕНИ НА РЕАЛЬНУЮ ССЫЛКУ!
-            
-            // Создаем временную ссылку и скачиваем
-            const link = document.createElement('a');
-            link.href = apkUrl;
-            link.download = 'ClickerPro.apk';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Показываем уведомление
-            alert('Скачивание началось! После загрузки открой файл на телефоне.');
-        }
-
-        // Функция показа VirusTotal
         function showVirusTotal(event) {
             event.preventDefault();
             document.getElementById('virusModal').classList.add('active');
         }
 
-        // Функция показа модальных окон
         function showModal(type) {
             event.preventDefault();
             if (type === 'privacy') {
@@ -562,12 +519,10 @@
             }
         }
 
-        // Функция закрытия модальных окон
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // Закрытие модалки по клику вне её
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.classList.remove('active');
