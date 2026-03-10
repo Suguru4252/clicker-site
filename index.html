@@ -1,292 +1,78 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub → APK Конвертер</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            text-align: center;
-            font-size: 28px;
-        }
-        
-        .subtitle {
-            color: #666;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        input[type="text"],
-        input[type="url"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        
-        input[type="text"]:focus,
-        input[type="url"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            border: 2px dashed #e0e0e0;
-            border-radius: 10px;
-            background: #f9f9f9;
-            cursor: pointer;
-        }
-        
-        .preview {
-            margin-top: 10px;
-            display: none;
-            text-align: center;
-        }
-        
-        .preview img {
-            max-width: 100px;
-            max-height: 100px;
-            border-radius: 10px;
-            border: 3px solid #667eea;
-        }
-        
-        button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        
-        button:hover {
-            transform: scale(1.02);
-        }
-        
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .result {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            display: none;
-        }
-        
-        .result.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            display: block;
-        }
-        
-        .result.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            display: block;
-        }
-        
-        .download-btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 20px;
-            background: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-        
-        .info {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .info a {
-            color: #667eea;
-            text-decoration: none;
-        }
-        
-        .step {
-            margin-top: 10px;
-            color: #667eea;
-            font-weight: 600;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>GitHub Pages → APK</title>
+
+<style>
+body{
+font-family:sans-serif;
+background:#111;
+color:white;
+text-align:center;
+padding:40px;
+}
+
+input{
+padding:10px;
+margin:10px;
+width:300px;
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+cursor:pointer;
+}
+</style>
+
 </head>
+
 <body>
-    <div class="container">
-        <h1>📱 GitHub → APK</h1>
-        <p class="subtitle">Создай APK из своего сайта на GitHub Pages за 1 минуту</p>
-        
-        <div class="form-group">
-            <label>🔗 Ссылка на GitHub Pages</label>
-            <input type="url" id="url" placeholder="https://username.github.io/repo/" required>
-        </div>
-        
-        <div class="form-group">
-            <label>📝 Название приложения</label>
-            <input type="text" id="appName" placeholder="Мой Кликер" required>
-        </div>
-        
-        <div class="form-group">
-            <label>🖼️ Иконка (PNG, 512x512)</label>
-            <input type="file" id="icon" accept="image/png, image/jpeg, image/jpg" required>
-            <div class="preview" id="preview">
-                <img src="" alt="Preview">
-            </div>
-        </div>
-        
-        <button id="createBtn">🚀 СОЗДАТЬ APK</button>
-        
-        <div class="result" id="result"></div>
-        
-        <div class="info">
-            <strong>⚠️ Как подготовить GitHub Pages:</strong>
-            <ol style="margin-top: 10px; margin-left: 20px;">
-                <li>Залей код на GitHub</li>
-                <li>Settings → Pages → Branch: main</li>
-                <li>Получи ссылку: username.github.io/repo</li>
-                <li>Вставь ссылку выше</li>
-            </ol>
-            <p style="margin-top: 10px;">🔧 <a href="https://www.youtube.com/watch?v=QyFclUHtXkY" target="_blank">Видео инструкция</a></p>
-        </div>
-    </div>
 
-    <script>
-        document.getElementById('icon').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('preview');
-                    preview.style.display = 'block';
-                    preview.querySelector('img').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+<h1>GitHub Pages → APK</h1>
 
-        document.getElementById('createBtn').addEventListener('click', async function() {
-            const url = document.getElementById('url').value.trim();
-            const appName = document.getElementById('appName').value.trim();
-            const iconFile = document.getElementById('icon').files[0];
-            
-            const resultDiv = document.getElementById('result');
-            
-            if (!url || !appName || !iconFile) {
-                resultDiv.className = 'result error';
-                resultDiv.innerHTML = '❌ Заполни все поля!';
-                return;
-            }
-            
-            if (!url.startsWith('http')) {
-                resultDiv.className = 'result error';
-                resultDiv.innerHTML = '❌ Ссылка должна начинаться с http:// или https://';
-                return;
-            }
-            
-            // Показываем процесс
-            resultDiv.className = 'result success';
-            resultDiv.innerHTML = '⏳ Проверяю ссылку...';
-            
-            try {
-                // Проверяем доступность ссылки
-                const checkResponse = await fetch(url, { mode: 'no-cors' });
-                
-                resultDiv.innerHTML = '⏳ Загружаю иконку...';
-                
-                // Создаем FormData
-                const formData = new FormData();
-                formData.append('url', url);
-                formData.append('name', appName);
-                formData.append('icon', iconFile);
-                
-                resultDiv.innerHTML = '⏳ Отправляю на сервер...';
-                
-                // Отправляем на сервер конвертации
-                const response = await fetch('https://api.apk-generator.com/v1/create', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Ошибка сервера: ' + response.status);
-                }
-                
-                const data = await response.json();
-                
-                if (data.success && data.download_url) {
-                    resultDiv.innerHTML = `
-                        ✅ APK готов!<br>
-                        <a href="${data.download_url}" class="download-btn" download>📥 Скачать APK</a>
-                        <br><small>Ссылка действительна 24 часа</small>
-                    `;
-                } else {
-                    throw new Error('Сервер не вернул ссылку');
-                }
-                
-            } catch (error) {
-                resultDiv.className = 'result error';
-                resultDiv.innerHTML = `❌ Ошибка: ${error.message}<br><br>🔧 Попробуй:<br>1. Проверь ссылку<br>2. Используй PNG иконку<br>3. Попробуй позже`;
-                console.error(error);
-            }
-        });
-    </script>
+<input id="name" placeholder="App name"><br>
+<input id="url" placeholder="GitHub Pages URL"><br>
+<input type="file" id="icon"><br>
+
+<button onclick="build()">Create APK</button>
+
+<p id="status"></p>
+
+<script>
+
+async function build(){
+
+let name = document.getElementById("name").value
+let url = document.getElementById("url").value
+let icon = document.getElementById("icon").files[0]
+
+let form = new FormData()
+
+form.append("name",name)
+form.append("url",url)
+form.append("icon",icon)
+
+document.getElementById("status").innerText="Building..."
+
+let res = await fetch("/build",{
+method:"POST",
+body:form
+})
+
+let blob = await res.blob()
+
+let a = document.createElement("a")
+a.href = URL.createObjectURL(blob)
+a.download = "app.apk"
+a.click()
+
+document.getElementById("status").innerText="Done!"
+
+}
+
+</script>
+
 </body>
 </html>
