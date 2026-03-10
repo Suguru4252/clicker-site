@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Pro — скачать игру</title>
+    <title>GitHub → APK Конвертер</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -20,291 +20,273 @@
             align-items: center;
             padding: 20px;
         }
-
-        .site-container {
-            max-width: 1200px;
-            width: 100%;
-        }
-
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 50px;
-        }
-
-        .header h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 18px;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .game-preview {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 30px;
-            color: white;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .game-screenshot {
-            width: 100%;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            padding: 40px;
-            text-align: center;
-            font-size: 24px;
-        }
-
-        .game-screenshot span {
-            font-size: 120px;
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        .feature-list {
-            list-style: none;
-        }
-
-        .feature-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .feature-list li:before {
-            content: "✅";
-            margin-right: 10px;
-        }
-
-        .download-section {
+        
+        .container {
             background: white;
-            border-radius: 30px;
+            border-radius: 20px;
             padding: 40px;
+            max-width: 500px;
+            width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-
-        .download-section h2 {
+        
+        h1 {
             color: #333;
-            margin-bottom: 20px;
-            font-size: 32px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 28px;
         }
-
-        .price-badge {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            display: inline-block;
+        
+        .subtitle {
+            color: #666;
+            text-align: center;
             margin-bottom: 30px;
-            font-weight: bold;
+            font-size: 14px;
         }
-
-        /* КНОПКА С ТВОЕЙ ССЫЛКОЙ */
-        .download-button {
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        input[type="text"],
+        input[type="url"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        input[type="url"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            background: #f9f9f9;
+            cursor: pointer;
+        }
+        
+        .preview {
+            margin-top: 10px;
+            display: none;
+            text-align: center;
+        }
+        
+        .preview img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 10px;
+            border: 3px solid #667eea;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            width: 100%;
-            padding: 25px;
-            font-size: 24px;
-            font-weight: bold;
-            border-radius: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
+            transition: transform 0.2s;
         }
-
-        .download-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.6);
+        
+        button:hover {
+            transform: scale(1.02);
         }
-
-        .security-info {
-            background: #f5f5f5;
-            border-radius: 15px;
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .result {
+            margin-top: 20px;
             padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            display: none;
         }
-
-        .security-info h3 {
-            color: #333;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        
+        .result.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
         }
-
-        .security-info p {
-            color: #666;
+        
+        .result.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
             font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 10px;
+            color: #666;
         }
-
-        .virus-total-link {
+        
+        .info a {
             color: #667eea;
             text-decoration: none;
-            font-weight: bold;
         }
-
-        .how-to-install {
-            border-top: 2px solid #eee;
-            padding-top: 20px;
-        }
-
-        .how-to-install h3 {
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .install-steps {
-            list-style: none;
-            counter-reset: step-counter;
-        }
-
-        .install-steps li {
-            counter-increment: step-counter;
-            margin-bottom: 15px;
-            padding-left: 40px;
-            position: relative;
-            color: #555;
-        }
-
-        .install-steps li:before {
-            content: counter(step-counter);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            left: 0;
-            top: 0;
-            font-weight: bold;
-        }
-
-        .warning-note {
-            background: #fff3cd;
-            border: 1px solid #ffeeba;
-            color: #856404;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .footer {
-            text-align: center;
-            color: white;
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            .header h1 {
-                font-size: 36px;
-            }
+        
+        .step {
+            margin-top: 10px;
+            color: #667eea;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-    <div class="site-container">
-        <!-- Шапка -->
-        <div class="header">
-            <h1>🍪 Clicker Pro</h1>
-            <p>Самый увлекательный кликер теперь на твоём телефоне! Без рекламы, без подписок, чистое удовольствие.</p>
+    <div class="container">
+        <h1>📱 GitHub → APK</h1>
+        <p class="subtitle">Создай APK из своего сайта на GitHub Pages за 1 минуту</p>
+        
+        <div class="form-group">
+            <label>🔗 Ссылка на GitHub Pages</label>
+            <input type="url" id="url" placeholder="https://username.github.io/repo/" required>
         </div>
-
-        <!-- Основной блок -->
-        <div class="main-content">
-            <!-- Левая часть: превью игры -->
-            <div class="game-preview">
-                <div class="game-screenshot">
-                    <span>👆</span>
-                    <h2>CLICK!</h2>
-                    <p>Нажимай и зарабатывай</p>
-                </div>
-                
-                <ul class="feature-list">
-                    <li>Красивый дизайн</li>
-                    <li>Магазин улучшений</li>
-                    <li>Автокликер</li>
-                    <li>Критические удары</li>
-                    <li>Статистика за всё время</li>
-                    <li>Полностью бесплатно</li>
-                </ul>
-            </div>
-
-            <!-- Правая часть: скачивание -->
-            <div class="download-section">
-                <h2>Скачать игру</h2>
-                <div class="price-badge">🔥 БЕСПЛАТНО</div>
-                
-                <!-- КНОПКА С ТВОЕЙ ССЫЛКОЙ -->
-                <a href="https://t.me/sugurucoins/5" target="_blank" style="text-decoration: none;">
-                    <div class="download-button">
-                        📥 Скачать APK
-                    </div>
-                </a>
-
-                <!-- Информация о безопасности -->
-                <div class="security-info">
-                    <h3>🛡️ Безопасность подтверждена</h3>
-                    <p>Приложение проверено на VirusTotal — 0 угроз. Чистый код, без вирусов и шпионского ПО.</p>
-                </div>
-
-                <!-- Инструкция по установке -->
-                <div class="how-to-install">
-                    <h3>📲 Как установить</h3>
-                    <ol class="install-steps">
-                        <li>Нажми кнопку "Скачать" выше</li>
-                        <li>Перейди в Telegram канал</li>
-                        <li>Нажми на файл в сообщении</li>
-                        <li>Разреши установку и играй!</li>
-                    </ol>
-                </div>
-
-                <!-- Предупреждение -->
-                <div class="warning-note">
-                    ⚠️ Android может показать предупреждение о безопасности — это нормально для приложений не из Google Play. Просто нажми "Всё равно установить".
-                </div>
+        
+        <div class="form-group">
+            <label>📝 Название приложения</label>
+            <input type="text" id="appName" placeholder="Мой Кликер" required>
+        </div>
+        
+        <div class="form-group">
+            <label>🖼️ Иконка (PNG, 512x512)</label>
+            <input type="file" id="icon" accept="image/png, image/jpeg, image/jpg" required>
+            <div class="preview" id="preview">
+                <img src="" alt="Preview">
             </div>
         </div>
-
-        <!-- Подвал -->
-        <div class="footer">
-            <p>© 2026 Clicker Pro. Все права защищены.</p>
-            <p>Наш Telegram: @sugurucoins</p>
+        
+        <button id="createBtn">🚀 СОЗДАТЬ APK</button>
+        
+        <div class="result" id="result"></div>
+        
+        <div class="info">
+            <strong>⚠️ Как подготовить GitHub Pages:</strong>
+            <ol style="margin-top: 10px; margin-left: 20px;">
+                <li>Залей код на GitHub</li>
+                <li>Settings → Pages → Branch: main</li>
+                <li>Получи ссылку: username.github.io/repo</li>
+                <li>Вставь ссылку выше</li>
+            </ol>
+            <p style="margin-top: 10px;">🔧 <a href="https://www.youtube.com/watch?v=QyFclUHtXkY" target="_blank">Видео инструкция</a></p>
         </div>
     </div>
+
+    <script>
+        document.getElementById('icon').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('preview');
+                    preview.style.display = 'block';
+                    preview.querySelector('img').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('createBtn').addEventListener('click', async function() {
+            const url = document.getElementById('url').value.trim();
+            const appName = document.getElementById('appName').value.trim();
+            const iconFile = document.getElementById('icon').files[0];
+            
+            const resultDiv = document.getElementById('result');
+            
+            if (!url || !appName || !iconFile) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '❌ Заполни все поля!';
+                return;
+            }
+            
+            if (!url.startsWith('http')) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = '❌ Ссылка должна начинаться с http:// или https://';
+                return;
+            }
+            
+            // Показываем процесс
+            resultDiv.className = 'result success';
+            resultDiv.innerHTML = '⏳ Проверяю ссылку...';
+            
+            try {
+                // Проверяем доступность ссылки
+                const checkResponse = await fetch(url, { mode: 'no-cors' });
+                
+                resultDiv.innerHTML = '⏳ Загружаю иконку...';
+                
+                // Создаем FormData
+                const formData = new FormData();
+                formData.append('url', url);
+                formData.append('name', appName);
+                formData.append('icon', iconFile);
+                
+                resultDiv.innerHTML = '⏳ Отправляю на сервер...';
+                
+                // Отправляем на сервер конвертации
+                const response = await fetch('https://api.apk-generator.com/v1/create', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка сервера: ' + response.status);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success && data.download_url) {
+                    resultDiv.innerHTML = `
+                        ✅ APK готов!<br>
+                        <a href="${data.download_url}" class="download-btn" download>📥 Скачать APK</a>
+                        <br><small>Ссылка действительна 24 часа</small>
+                    `;
+                } else {
+                    throw new Error('Сервер не вернул ссылку');
+                }
+                
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ Ошибка: ${error.message}<br><br>🔧 Попробуй:<br>1. Проверь ссылку<br>2. Используй PNG иконку<br>3. Попробуй позже`;
+                console.error(error);
+            }
+        });
+    </script>
 </body>
 </html>
