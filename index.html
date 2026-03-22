@@ -1,0 +1,461 @@
+use std::collections::HashMap;
+use rand::Rng;
+use std::io::{self, Write};
+
+// ========== СТРУКТУРЫ ИГРЫ ==========
+
+#[derive(Debug, Clone)]
+struct Player {
+    name: String,
+    health: f32,
+    hunger: f32,
+    thirst: f32,
+    inventory: HashMap<String, u32>,
+    building_parts: Vec<String>,
+    x: i32,
+    y: i32,
+    level: u32,
+    xp: u32,
+}
+
+#[derive(Debug)]
+struct Resource {
+    name: String,
+    gather_tool: String,
+    yield_amount: u32,
+}
+
+#[derive(Debug)]
+struct Animal {
+    name: String,
+    health: f32,
+    damage: f32,
+    drops: Vec<String>,
+}
+
+impl Player {
+    fn new(name: String) -> Self {
+        let mut inventory = HashMap::new();
+        inventory.insert("Камень".to_string(), 2);
+        inventory.insert("Древесина".to_string(), 5);
+        
+        Self {
+            name,
+            health: 100.0,
+            hunger: 100.0,
+            thirst: 100.0,
+            inventory,
+            building_parts: Vec::new(),
+            x: 0,
+            y: 0,
+            level: 1,
+            xp: 0,
+        }
+    }
+    
+    fn status(&self) {
+        println!("\n╔══════════════════════════════════════╗");
+        println!("║ Игрок: {} (Уровень {})              ║", self.name, self.level);
+        println!("╠══════════════════════════════════════╣");
+        println!("║ ❤️  Здоровье: {:.1}/100              ║", self.health);
+        println!("║ 🍖 Голод: {:.1}/100                  ║", self.hunger);
+        println!("║ 💧 Жажда: {:.1}/100                  ║", self.thirst);
+        println!("║ 📍 Позиция: X={}, Y={}               ║", self.x, self.y);
+        println!("║ ⭐ Опыт: {}/{}                       ║", self.xp, self.level * 100);
+        println!("╚══════════════════════════════════════╝");
+        
+        println!("\n📦 Инвентарь:");
+        if self.inventory.is_empty() {
+            println!("   Пусто");
+        } else {
+            for (item, count) in &self.inventory {
+                println!("   • {}: {}", item, count);
+            }
+        }
+        
+        if !self.building_parts.is_empty() {
+            println!("\n🏠 Построенные объекты: {}", self.building_parts.len());
+        }
+    }
+    
+    fn add_item(&mut self, item: String, count: u32) {
+        *self.inventory.entry(item).or_insert(0) += count;
+        self.gain_xp(5);
+    }
+    
+    fn remove_item(&mut self, item: &str, count: u32) -> bool {
+        if let Some(amt) = self.inventory.get_mut(item) {
+            if *amt >= count {
+                *amt -= count;
+                if *amt == 0 {
+                    self.inventory.remove(item);
+                }
+                return true;
+            }
+        }
+        false
+    }
+    
+    fn gain_xp(&mut self, amount: u32) {
+        self.xp += amount;
+        let required = self.level * 100;
+        if self.xp >= required {
+            self.level += 1;
+            self.xp -= required;
+            println!("\n🎉 УРОВЕНЬ ПОВЫШЕН! Теперь вы {} уровень! 🎉", self.level);
+            println!("   +10 к максимальному здоровью!");
+            self.health = (self.health + 20.0).min(100.0 + (self.level as f32 * 5.0));
+        }
+    }
+    
+    fn take_damage(&mut self, amount: f32) {
+        self.health -= amount;
+        if self.health <= 0.0 {
+            println!("\n💀 ВЫ УМЕРЛИ! Возрождение... 💀");
+            self.health = 50.0;
+            self.hunger = 80.0;
+            self.thirst = 80.0;
+            self.x = 0;
+            self.y = 0;
+            // Потеря половины ресурсов при смерти (как в Rust)
+            let mut to_remove = Vec::new();
+            for (item, count) in &self.inventory {
+                if *count > 1 {
+                    let lost = count / 2;
+                    *self.inventory.get_mut(item).unwrap() = *count - lost;
+                    println!("   Потеряно {} {}", lost, item);
+                } else {
+                    to_remove.push(item.clone());
+                }
+            }
+            for item in to_remove {
+                self.inventory.remove(&item);
+            }
+        }
+    }
+    
+    fn eat(&mut self) {
+        if self.remove_item("Еда", 1) {
+            self.hunger = (self.hunger + 30.0).min(100.0);
+            println!("🍎 Вы съели еду. Голод: {:.1}/100", self.hunger);
+        } else if self.remove_item("Ягоды", 1) {
+            self.hunger = (self.hunger + 10.0).min(100.0);
+            println!("🍓 Вы съели ягоды. Голод: {:.1}/100", self.hunger);
+        } else {
+            println!("❌ Нет еды в инвентаре!");
+        }
+    }
+    
+    fn drink(&mut self) {
+        self.thirst = (self.thirst + 30.0).min(100.0);
+        println!("💧 Вы напились воды. Жажда: {:.1}/100", self.thirst);
+    }
+    
+    fn craft(&mut self) {
+        println!("\n🔨 ДОСТУПНЫЕ РЕЦЕПТЫ:");
+        println!("1. 🔪 Каменный нож - 2 камень, 1 древесина");
+        println!("2. 🪓 Топор - 3 древесина, 1 камень");
+        println!("3. 🏠 Фундамент - 10 древесина");
+        println!("4. 🍖 Еда - 5 ягод");
+        println!("5. 🏹 Лук - 5 древесина, 2 ткань");
+        println!("6. 🔙 Назад");
+        
+        print!("Выберите рецепт: ");
+        io::stdout().flush().unwrap();
+        
+        let mut choice = String::new();
+        io::stdin().read_line(&mut choice).unwrap();
+        
+        match choice.trim() {
+            "1" => {
+                if self.remove_item("Камень", 2) && self.remove_item("Древесина", 1) {
+                    self.add_item("Каменный нож".to_string(), 1);
+                    println!("✅ Создан Каменный нож!");
+                } else {
+                    println!("❌ Недостаточно ресурсов!");
+                }
+            }
+            "2" => {
+                if self.remove_item("Древесина", 3) && self.remove_item("Камень", 1) {
+                    self.add_item("Топор".to_string(), 1);
+                    println!("✅ Создан Топор!");
+                } else {
+                    println!("❌ Недостаточно ресурсов!");
+                }
+            }
+            "3" => {
+                if self.remove_item("Древесина", 10) {
+                    self.building_parts.push("Фундамент".to_string());
+                    println!("✅ Фундамент построен! Всего частей: {}", self.building_parts.len());
+                } else {
+                    println!("❌ Недостаточно древесины!");
+                }
+            }
+            "4" => {
+                if self.remove_item("Ягоды", 5) {
+                    self.add_item("Еда".to_string(), 1);
+                    println!("✅ Приготовлена еда!");
+                } else {
+                    println!("❌ Недостаточно ягод!");
+                }
+            }
+            "5" => {
+                if self.remove_item("Древесина", 5) && self.remove_item("Ткань", 2) {
+                    self.add_item("Лук".to_string(), 1);
+                    println!("✅ Создан Лук!");
+                } else {
+                    println!("❌ Недостаточно ресурсов! Нужно: 5 древесина, 2 ткань");
+                }
+            }
+            _ => println!("🔙 Возврат..."),
+        }
+    }
+}
+
+// ========== МИР И РЕСУРСЫ ==========
+
+struct World {
+    resources: Vec<Resource>,
+    animals: Vec<Animal>,
+}
+
+impl World {
+    fn new() -> Self {
+        let resources = vec![
+            Resource { name: "Древесина".to_string(), gather_tool: "Топор".to_string(), yield_amount: 10 },
+            Resource { name: "Камень".to_string(), gather_tool: "Кирка".to_string(), yield_amount: 8 },
+            Resource { name: "Ягоды".to_string(), gather_tool: "Руки".to_string(), yield_amount: 5 },
+            Resource { name: "Ткань".to_string(), gather_tool: "Нож".to_string(), yield_amount: 3 },
+        ];
+        
+        let animals = vec![
+            Animal { name: "🐗 Кабан".to_string(), health: 30.0, damage: 10.0, drops: vec!["Мясо".to_string(), "Кожа".to_string()] },
+            Animal { name: "🐻 Медведь".to_string(), health: 80.0, damage: 25.0, drops: vec!["Мясо".to_string(), "Шкура".to_string()] },
+            Animal { name: "🐺 Волк".to_string(), health: 40.0, damage: 15.0, drops: vec!["Мясо".to_string()] },
+        ];
+        
+        Self { resources, animals }
+    }
+    
+    fn gather(&self, player: &mut Player, resource_name: &str) {
+        if let Some(res) = self.resources.iter().find(|r| r.name == resource_name) {
+            let has_tool = player.inventory.contains_key(&res.gather_tool);
+            
+            let mut base_yield = res.yield_amount;
+            if has_tool {
+                base_yield *= 2;
+                println!("🔨 +{} {} (с инструментом {})", base_yield, res.name, res.gather_tool);
+            } else {
+                println!("🪓 +{} {} (руками)", base_yield, res.name);
+                println!("   💡 Совет: используйте {} для двойной добычи!", res.gather_tool);
+            }
+            
+            player.add_item(res.name.clone(), base_yield);
+            
+            // Шанс найти редкий предмет (как в Rust)
+            let mut rng = rand::thread_rng();
+            if rng.gen_bool(0.15) {
+                let rare_items = ["Древесный уголь", "Металлолом", "Кремень"];
+                let rare = rare_items[rng.gen_range(0..rare_items.len())];
+                player.add_item(rare.to_string(), 1);
+                println!("✨ РЕДКИЙ ДРОП! Найден {}! ✨", rare);
+            }
+        }
+    }
+    
+    fn hunt(&self, player: &mut Player) {
+        let mut rng = rand::thread_rng();
+        let animal = &self.animals[rng.gen_range(0..self.animals.len())];
+        
+        println!("\n⚔️ Вы встретили {}! ⚔️", animal.name);
+        println!("❤️ Здоровье зверя: {}", animal.health);
+        println!("⚔️ Урон зверя: {}", animal.damage);
+        
+        let mut animal_health = animal.health;
+        
+        while animal_health > 0.0 && player.health > 0.0 {
+            print!("\n[Атаковать (1) | Убежать (2)]: ");
+            io::stdout().flush().unwrap();
+            
+            let mut choice = String::new();
+            io::stdin().read_line(&mut choice).unwrap();
+            
+            match choice.trim() {
+                "1" => {
+                    let player_damage = if player.inventory.contains_key("Каменный нож") {
+                        25.0
+                    } else if player.inventory.contains_key("Лук") {
+                        30.0
+                    } else {
+                        10.0
+                    };
+                    
+                    animal_health -= player_damage;
+                    println!("💥 Вы нанесли {} урона! У зверя осталось {:.1} HP", player_damage, animal_health);
+                    
+                    if animal_health > 0.0 {
+                        player.take_damage(animal.damage);
+                        println!("🐾 Зверь нанес {} урона! У вас {:.1} HP", animal.damage, player.health);
+                    }
+                }
+                "2" => {
+                    if rng.gen_bool(0.7) {
+                        println!("🏃 Вы успешно убежали!");
+                        return;
+                    } else {
+                        println!("😱 Не удалось убежать! Зверь вас атакует!");
+                        player.take_damage(animal.damage);
+                    }
+                }
+                _ => println!("❌ Неверный выбор!"),
+            }
+        }
+        
+        if animal_health <= 0.0 {
+            println!("\n🎉 Вы победили {}! 🎉", animal.name);
+            for drop in &animal.drops {
+                player.add_item(drop.clone(), rng.gen_range(1..4));
+                println!("📦 Добыто: {} x{}", drop, rng.gen_range(1..4));
+            }
+            player.gain_xp(50);
+        }
+    }
+}
+
+// ========== ОСНОВНОЙ ИГРОВОЙ ЦИКЛ ==========
+
+fn main() {
+    println!("╔══════════════════════════════════════╗");
+    println!("║     RUST-LIKE SURVIVAL DEMO v1.0     ║");
+    println!("║     Выживание в диком мире!          ║");
+    println!("╚══════════════════════════════════════╝");
+    
+    print!("\nВведите имя вашего выжившего: ");
+    io::stdout().flush().unwrap();
+    
+    let mut name = String::new();
+    io::stdin().read_line(&mut name).unwrap();
+    let name = name.trim().to_string();
+    
+    let mut player = Player::new(name);
+    let world = World::new();
+    let mut day = 1;
+    let mut rng = rand::thread_rng();
+    
+    println!("\n✨ Добро пожаловать, {}! Вы проснулись на берегу... ✨", player.name);
+    println!("🏝️ Ваша цель: выжить, добывать ресурсы, строить и не умереть от голода!\n");
+    
+    loop {
+        // Естественные потери голода и жажды
+        player.hunger = (player.hunger - 1.5).max(0.0);
+        player.thirst = (player.thirst - 2.0).max(0.0);
+        
+        // Урон от голода/жажды
+        if player.hunger <= 0.0 {
+            println!("⚠️ ВНИМАНИЕ: ВЫ УМИРАЕТЕ ОТ ГОЛОДА! ⚠️");
+            player.take_damage(5.0);
+        }
+        if player.thirst <= 0.0 {
+            println!("⚠️ ВНИМАНИЕ: ВЫ УМИРАЕТЕ ОТ ЖАЖДЫ! ⚠️");
+            player.take_damage(5.0);
+        }
+        
+        player.status();
+        
+        println!("\n📋 ДОСТУПНЫЕ ДЕЙСТВИЯ:");
+        println!("1. 🪓 Добывать ресурсы");
+        println!("2. 🏹 Охота на животных");
+        println!("3. 🔨 Крафт предметов");
+        println!("4. 🍖 Поесть");
+        println!("5. 💧 Выпить воды");
+        println!("6. 🚶 Переместиться");
+        println!("7. 💾 Статистика (детально)");
+        println!("8. 🚪 Выйти из игры");
+        
+        print!("\nВыберите действие: ");
+        io::stdout().flush().unwrap();
+        
+        let mut choice = String::new();
+        io::stdin().read_line(&mut choice).unwrap();
+        
+        match choice.trim() {
+            "1" => {
+                println!("\n🌲 РЕСУРСЫ В ОКРЕСТНОСТЯХ:");
+                println!("1. Древесина (топор)");
+                println!("2. Камень (кирка)");
+                println!("3. Ягоды (руки)");
+                println!("4. Ткань (нож)");
+                
+                print!("Что собираем? (1-4): ");
+                io::stdout().flush().unwrap();
+                
+                let mut res_choice = String::new();
+                io::stdin().read_line(&mut res_choice).unwrap();
+                
+                match res_choice.trim() {
+                    "1" => world.gather(&mut player, "Древесина"),
+                    "2" => world.gather(&mut player, "Камень"),
+                    "3" => world.gather(&mut player, "Ягоды"),
+                    "4" => world.gather(&mut player, "Ткань"),
+                    _ => println!("❌ Неверный выбор!"),
+                }
+            }
+            "2" => world.hunt(&mut player),
+            "3" => player.craft(),
+            "4" => player.eat(),
+            "5" => player.drink(),
+            "6" => {
+                player.x += rng.gen_range(-2..=2);
+                player.y += rng.gen_range(-2..=2);
+                println!("🏃 Вы переместились на позицию ({}, {})", player.x, player.y);
+                day += 1;
+                println!("📅 День {} наступил", day);
+            }
+            "7" => {
+                println!("\n📊 ПОДРОБНАЯ СТАТИСТИКА:");
+                println!("   Уровень: {}", player.level);
+                println!("   Опыт до след. уровня: {}/{}", player.xp, player.level * 100);
+                println!("   Построено объектов: {}", player.building_parts.len());
+                println!("   Предметов в инвентаре: {}", player.inventory.values().sum::<u32>());
+                println!("   Всего типов предметов: {}", player.inventory.len());
+            }
+            "8" => {
+                println!("\n👋 Спасибо за игру! Вы выжили {} дней!", day);
+                println!("🏆 Ваш итоговый уровень: {}", player.level);
+                break;
+            }
+            _ => println!("❌ Неверный выбор!"),
+        }
+        
+        // Случайная встреча (как в Rust)
+        if rng.gen_bool(0.2) && player.health > 0.0 {
+            println!("\n⚠️ СЛУЧАЙНАЯ ВСТРЕЧА! ⚠️");
+            let events = [
+                "Вы нашли заброшенную базу с припасами! +15 опыта",
+                "На вас напал другой выживший! -15 здоровья",
+                "Вы нашли ящик с ресурсами! +10 случайных ресурсов",
+                "Вас укусила змея! -5 здоровья",
+            ];
+            let event = events[rng.gen_range(0..events.len())];
+            println!("{}", event);
+            
+            if event.contains("припасами") {
+                player.gain_xp(15);
+            } else if event.contains("напал") {
+                player.take_damage(15.0);
+            } else if event.contains("ящик") {
+                let resources = ["Древесина", "Камень", "Ягоды", "Металлолом"];
+                let res = resources[rng.gen_range(0..resources.len())];
+                player.add_item(res.to_string(), 10);
+            } else if event.contains("змея") {
+                player.take_damage(5.0);
+            }
+        }
+        
+        println!("\n{}", "=".repeat(50));
+        println!("Нажмите Enter для продолжения...");
+        io::stdout().flush().unwrap();
+        let mut _pause = String::new();
+        io::stdin().read_line(&mut _pause).unwrap();
+    }
+}
