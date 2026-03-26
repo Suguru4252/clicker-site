@@ -1,0 +1,38 @@
+{
+    "warrior": {
+        "name": "Мечник",
+        "icon": "⚔️",
+        "color": "#6c8cae",
+        "armorColor": "#5a7a9a",
+        "hpBase": 450,
+        "mpBase": 100,
+        "crit": 12,
+        "dodge": 6,
+        "skill": "Вихрь",
+        "skillDesc": "Вращение, урон x2.2 по всем вокруг"
+    },
+    "archer": {
+        "name": "Лучник",
+        "icon": "🏹",
+        "color": "#7cae6c",
+        "armorColor": "#6a8a5a",
+        "hpBase": 360,
+        "mpBase": 170,
+        "crit": 18,
+        "dodge": 12,
+        "skill": "Тройной выстрел",
+        "skillDesc": "3 стрелы x3.2 урона по ближайшим"
+    },
+    "mage": {
+        "name": "Маг",
+        "icon": "🔮",
+        "color": "#b57ad6",
+        "armorColor": "#9a6aba",
+        "hpBase": 300,
+        "mpBase": 300,
+        "crit": 15,
+        "dodge": 9,
+        "skill": "Огненный взрыв",
+        "skillDesc": "Взрыв по клику x2.8 урона"
+    }
+}
