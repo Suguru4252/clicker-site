@@ -1,0 +1,9 @@
+[
+    { "id": "cloth", "name": "Тканевая броня", "def": 4, "level": 1, "price": 100, "icon": "🧥", "color": "#c0c0c0" },
+    { "id": "leather", "name": "Кожаная броня", "def": 10, "level": 3, "price": 300, "icon": "🧥", "color": "#8b5a2b" },
+    { "id": "iron", "name": "Железная броня", "def": 18, "level": 6, "price": 800, "icon": "🛡️", "color": "#6a6a7a" },
+    { "id": "golden", "name": "Золотая броня", "def": 28, "level": 10, "price": 1500, "icon": "🛡️✨", "color": "#e8b85a" },
+    { "id": "runic", "name": "Руническая броня", "def": 40, "level": 15, "price": 3000, "icon": "🔮", "color": "#9a6aba" },
+    { "id": "dragon", "name": "Драконья броня", "def": 55, "level": 20, "price": 6000, "icon": "🐉", "color": "#c97a3a" },
+    { "id": "legendary", "name": "Легендарная броня", "def": 75, "level": 30, "price": 12000, "icon": "⭐", "color": "#ffaa66" }
+]
