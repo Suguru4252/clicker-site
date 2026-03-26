@@ -1,0 +1,11 @@
+[
+    { "id": "dagger", "name": "Кинжал", "dmgMin": 6, "dmgMax": 12, "level": 1, "price": 80, "icon": "🗡️", "type": "melee", "range": 55 },
+    { "id": "sword", "name": "Меч", "dmgMin": 12, "dmgMax": 22, "level": 3, "price": 250, "icon": "⚔️", "type": "melee", "range": 60 },
+    { "id": "claymore", "name": "Двуручный меч", "dmgMin": 20, "dmgMax": 35, "level": 6, "price": 700, "icon": "🗡️✨", "type": "melee", "range": 65 },
+    { "id": "bow", "name": "Лук", "dmgMin": 14, "dmgMax": 26, "level": 3, "price": 300, "icon": "🏹", "type": "ranged", "range": 150 },
+    { "id": "crossbow", "name": "Арбалет", "dmgMin": 22, "dmgMax": 40, "level": 8, "price": 900, "icon": "🏹✨", "type": "ranged", "range": 160 },
+    { "id": "staff", "name": "Посох", "dmgMin": 16, "dmgMax": 30, "level": 4, "price": 400, "icon": "🔮", "type": "mage", "range": 140 },
+    { "id": "wand", "name": "Жезл", "dmgMin": 26, "dmgMax": 48, "level": 10, "price": 1200, "icon": "🔮✨", "type": "mage", "range": 150 },
+    { "id": "dragonfang", "name": "Драконий клык", "dmgMin": 38, "dmgMax": 62, "level": 20, "price": 4000, "icon": "🐉⚔️", "type": "melee", "range": 68 },
+    { "id": "legendary", "name": "Легендарный меч", "dmgMin": 52, "dmgMax": 88, "level": 30, "price": 10000, "icon": "⭐⚔️", "type": "melee", "range": 70 }
+]
