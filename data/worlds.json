@@ -1,0 +1,49 @@
+{
+    "forest": {
+        "name": "Лес",
+        "icon": "🌲",
+        "bg": "#2b5e3b",
+        "floor1": "#3c8c40",
+        "floor2": "#2c6c30",
+        "mobMultiplier": 1.0,
+        "tileSet": "grass"
+    },
+    "desert": {
+        "name": "Пустыня",
+        "icon": "🏜️",
+        "bg": "#c9ae74",
+        "floor1": "#e0b87a",
+        "floor2": "#c9a86a",
+        "mobMultiplier": 1.3,
+        "tileSet": "sand"
+    },
+    "castle": {
+        "name": "Замок",
+        "icon": "🏰",
+        "bg": "#4a5b6e",
+        "floor1": "#6c7f8f",
+        "floor2": "#5a6b7a",
+        "mobMultiplier": 1.6,
+        "tileSet": "castle"
+    },
+    "volcano": {
+        "name": "Вулкан",
+        "icon": "🌋",
+        "bg": "#8a3a2a",
+        "floor1": "#aa5a3a",
+        "floor2": "#8a4a2a",
+        "mobMultiplier": 2.0,
+        "tileSet": "stone",
+        "unlockLevel": 15
+    },
+    "ice": {
+        "name": "Ледяные земли",
+        "icon": "❄️",
+        "bg": "#6a8aba",
+        "floor1": "#8aaace",
+        "floor2": "#6a8aaa",
+        "mobMultiplier": 2.5,
+        "tileSet": "ice",
+        "unlockLevel": 25
+    }
+}
