@@ -26,10 +26,10 @@ canvas {
     cursor: pointer;
     image-rendering: crisp-edges;
     image-rendering: pixelated;
-    image-rendering: pixelated;
 }
 
-.vertical-buttons {
+/* Левая вертикальная панель (суперсила, зелья) */
+.left-buttons {
     position: fixed;
     bottom: 20px;
     left: 15px;
@@ -53,6 +53,7 @@ canvas {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: monospace;
 }
 
 .v-btn:active { transform: translateY(2px); }
@@ -60,6 +61,42 @@ canvas {
 .hp-btn { background: rgba(180,60,60,0.9); border-color: #ff8866; }
 .mp-btn { background: rgba(60,80,180,0.9); border-color: #88aaff; }
 
+/* Правая вертикальная панель (выбор класса) */
+.right-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+}
+
+.class-btn {
+    width: 55px;
+    height: 55px;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    border: 2px solid #ffaa55;
+    border-radius: 50%;
+    color: #ffcc88;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.03s linear;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.class-btn:active { transform: translateY(2px); }
+.class-warrior { border-color: #6c8cae; color: #6c8cae; }
+.class-archer { border-color: #7cae6c; color: #7cae6c; }
+.class-mage { border-color: #b57ad6; color: #b57ad6; }
+.class-active { background: rgba(255,200,100,0.9); border-color: #ffaa66; color: #000; }
+
+/* Кнопки статистики и инвентаря */
 .corner-btn {
     position: fixed;
     top: 15px;
@@ -73,12 +110,32 @@ canvas {
     border-radius: 30px;
     cursor: pointer;
     z-index: 100;
+    font-family: monospace;
 }
 
 .stats-btn { right: 15px; }
 .inventory-btn { left: 15px; }
 
+/* Подсказки для ПК */
+.pc-hint {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    color: #ffcc88;
+    font-family: monospace;
+    z-index: 100;
+    white-space: nowrap;
+}
+
 @media (max-width: 700px) {
     .v-btn { width: 50px; height: 50px; font-size: 24px; }
+    .class-btn { width: 45px; height: 45px; font-size: 20px; }
     .corner-btn { font-size: 14px; padding: 6px 12px; }
+    .pc-hint { display: none; }
 }
