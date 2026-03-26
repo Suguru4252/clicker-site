@@ -1,0 +1,14 @@
+[
+    { "name": "Гоблин", "hp": 85, "dmg": 22, "exp": 48, "color": "#6f8c5a", "skin": "#8cae6a", "icon": "👺", "speed": 1.05, "range": 60, "levelMin": 1, "goldMin": 25, "goldMax": 55 },
+    { "name": "Тролль", "hp": 165, "dmg": 33, "exp": 82, "color": "#7a6a4a", "skin": "#9a8a62", "icon": "👹", "speed": 0.78, "range": 64, "levelMin": 2, "goldMin": 42, "goldMax": 82 },
+    { "name": "Скелет", "hp": 220, "dmg": 42, "exp": 118, "color": "#b8b8cc", "skin": "#d0d0e0", "icon": "💀", "speed": 1.12, "range": 60, "levelMin": 3, "goldMin": 60, "goldMax": 110 },
+    { "name": "Орк", "hp": 305, "dmg": 56, "exp": 168, "color": "#8a6a4a", "skin": "#aa8262", "icon": "👺", "speed": 0.88, "range": 64, "levelMin": 4, "goldMin": 82, "goldMax": 155 },
+    { "name": "Волк", "hp": 130, "dmg": 31, "exp": 72, "color": "#8a9ac6", "skin": "#c0d0f0", "icon": "🐺", "speed": 1.35, "range": 56, "levelMin": 2, "goldMin": 35, "goldMax": 72 },
+    { "name": "Элементаль", "hp": 190, "dmg": 46, "exp": 108, "color": "#d97a3a", "skin": "#f0a060", "icon": "🔥", "speed": 0.95, "range": 62, "levelMin": 3, "goldMin": 52, "goldMax": 98 },
+    { "name": "Голем", "hp": 390, "dmg": 62, "exp": 210, "color": "#8a8a7a", "skin": "#aaa890", "icon": "🗿", "speed": 0.55, "range": 70, "levelMin": 5, "goldMin": 105, "goldMax": 185 },
+    { "name": "Дракон", "hp": 420, "dmg": 74, "exp": 265, "color": "#c97a3a", "skin": "#e09a5a", "icon": "🐉", "speed": 0.62, "range": 70, "levelMin": 6, "goldMin": 125, "goldMax": 225 },
+    { "name": "Призрак", "hp": 230, "dmg": 52, "exp": 142, "color": "#6a5a8a", "skin": "#8a7ab0", "icon": "👻", "speed": 1.2, "range": 58, "levelMin": 4, "goldMin": 72, "goldMax": 125 },
+    { "name": "Энт", "hp": 480, "dmg": 66, "exp": 310, "color": "#5a8a4a", "skin": "#7aaa62", "icon": "🌳", "speed": 0.5, "range": 72, "levelMin": 7, "goldMin": 165, "goldMax": 285 },
+    { "name": "Вампир", "hp": 280, "dmg": 58, "exp": 185, "color": "#8a5a6a", "skin": "#b07a8a", "icon": "🧛", "speed": 1.1, "range": 62, "levelMin": 5, "goldMin": 95, "goldMax": 165 },
+    { "name": "Демон", "hp": 550, "dmg": 88, "exp": 420, "color": "#aa5a5a", "skin": "#cc7a7a", "icon": "😈", "speed": 0.7, "range": 68, "levelMin": 9, "goldMin": 220, "goldMax": 380 }
+]
